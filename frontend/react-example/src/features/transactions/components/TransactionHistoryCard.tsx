@@ -69,7 +69,7 @@ export function TransactionHistoryCard({
 				return;
 			}
 
-			const explorerUrl = `https://explorer.mendoza.hoodi.arkiv.network/entity/${entityKey}?tab=data`;
+			const explorerUrl = `https://explorer.infurademo.hoodi.arkiv.network/entity/${entityKey}?tab=data`;
 
 			window.open(explorerUrl, "_blank", "noopener,noreferrer");
 		},

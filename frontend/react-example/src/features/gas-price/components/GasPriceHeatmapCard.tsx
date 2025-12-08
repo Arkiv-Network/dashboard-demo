@@ -158,7 +158,7 @@ export function GasPriceHeatmapCard({ className }: GasPriceHeatmapCardProps) {
 			alwaysShowRange
 			getCellHref={(datum) =>
 				datum.meta?.arkivEntityKey
-					? `https://explorer.mendoza.hoodi.arkiv.network/entity/${datum.meta.arkivEntityKey}?tab=data`
+					? `https://explorer.infurademo.hoodi.arkiv.network/entity/${datum.meta.arkivEntityKey}?tab=data`
 					: undefined
 			}
 			cellLinkTarget="_blank"

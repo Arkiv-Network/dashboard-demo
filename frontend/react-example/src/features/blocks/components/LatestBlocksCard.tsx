@@ -174,7 +174,7 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
 										</TableCell>
 										<TableCell>
 											<a
-												href={`https://explorer.mendoza.hoodi.arkiv.network/entity/${block.arkivEntityKey}?tab=data`}
+												href={`https://explorer.infurademo.hoodi.arkiv.network/entity/${block.arkivEntityKey}?tab=data`}
 												target="_blank"
 												rel="noreferrer"
 												className="inline-flex items-center justify-center text-sky-700 hover:text-sky-900 gap-1"

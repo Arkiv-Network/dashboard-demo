@@ -106,7 +106,7 @@ function updateTableRows(blocks) {
 
 		const entityCell = document.createElement("td");
 		const entityLink = createExternalLink(
-			`https://explorer.mendoza.hoodi.arkiv.network/entity/${block.arkivEntityKey}?tab=data`,
+			`https://explorer.infurademo.hoodi.arkiv.network/entity/${block.arkivEntityKey}?tab=data`,
 			formatAddress(block.arkivEntityKey),
 		);
 		entityLink.title = block.arkivEntityKey;

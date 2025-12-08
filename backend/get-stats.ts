@@ -2,6 +2,7 @@ import { formatGwei } from "viem";
 import {
 	getAggregatedDataSinceTimestamp,
 	getBlocksSinceTimestamp,
+	getEntityCountOnNetwork,
 	getLatestBlockNumber,
 	getOldestBlockNumber,
 } from "./src/arkiv";
@@ -86,6 +87,10 @@ async function getGLMTransfers(fromBlock?: bigint, toBlock?: bigint) {
 	});
 }
 
-getStats();
-getBlocks();
-getGLMTransfers();
+await getStats();
+await getBlocks();
+// getGLMTransfers();
+const entityCount = await getEntityCountOnNetwork();
+console.log("Entity count on network:", entityCount);
+const latestBlockNumber = await getLatestBlockNumber();
+console.log("Latest block number:", latestBlockNumber);

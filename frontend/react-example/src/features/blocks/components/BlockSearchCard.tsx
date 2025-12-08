@@ -92,7 +92,7 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
 				value: `${data.arkivEntityKey.slice(0, 8)}…${data.arkivEntityKey.slice(
 					-6,
 				)}`,
-				linkTo: `https://explorer.mendoza.hoodi.arkiv.network/entity/${data.arkivEntityKey}?tab=data`,
+				linkTo: `https://explorer.infurademo.hoodi.arkiv.network/entity/${data.arkivEntityKey}?tab=data`,
 			},
 		];
 

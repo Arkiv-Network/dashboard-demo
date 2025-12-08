@@ -318,3 +318,7 @@ export async function getAggregatedDataSinceTimestamp({
 		aggregatedDataSchema.parse(entity.toJson()),
 	);
 }
+
+export async function getEntityCountOnNetwork(): Promise<number> {
+	return arkivPublicClient.getEntityCount();
+}
