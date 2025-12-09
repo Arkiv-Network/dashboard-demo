@@ -31,8 +31,8 @@ const TableHeaderRow = () => (
 			<TableHead className="w-[15%]">Block</TableHead>
 			<TableHead className="w-[25%]">Timestamp</TableHead>
 			<TableHead className="w-[25%]">Miner</TableHead>
-			<TableHead className="w-[10%]">Tx Count</TableHead>
 			<TableHead className="w-[25%]">Arkiv Entity</TableHead>
+			<TableHead className="w-[10%] text-right">Tx Count</TableHead>
 		</TableRow>
 	</TableHeader>
 );
@@ -169,9 +169,6 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
 												<ExternalLink className="size-4" />
 											</a>
 										</TableCell>
-										<TableCell className="font-mono text-sm text-slate-900">
-											{block.transactionCount.toLocaleString()}
-										</TableCell>
 										<TableCell>
 											<a
 												href={`https://explorer.infurademo.hoodi.arkiv.network/entity/${block.arkivEntityKey}?tab=data`}
@@ -186,6 +183,9 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
 												)}…${block.arkivEntityKey.slice(-6)}`}</span>
 												<ExternalLink className="size-4" />
 											</a>
+										</TableCell>
+										<TableCell className="font-mono text-sm text-slate-900 text-right">
+											{block.transactionCount.toLocaleString()}
 										</TableCell>
 									</TableRow>
 								))
