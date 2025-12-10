@@ -1,6 +1,6 @@
-## Arkiv Infura Demo
+## Arkiv Dashboard Demo
 
-Welcome to the Arkiv Infura demo project. This repository bundles a Bun-powered backend runing as a simple script or Hono web app with two frontend dashboards (React and vanilla JavaScript) to explore data collected from the Ethereum blockchain and stored in Arkiv.
+Welcome to the Arkiv Dashboard demo project. This repository bundles a Bun-powered backend running as a simple script or Hono web app with two frontend dashboards (React and vanilla JavaScript) to explore data collected from the Ethereum blockchain and stored in Arkiv.
 
 The sections below explain how to install dependencies, run each part of the stack, and operate the ingestion utilities.
 
@@ -27,7 +27,7 @@ Alternatively, the backend can be run as a Hono web application that exposes dat
 ### Setup
 
 ```bash
-cd inf-demo/backend
+cd dashboard-demo/backend
 bun install
 ```
 
@@ -92,7 +92,7 @@ Adjust the schedule and base URL to match your deployment environment.
 This Vite-powered dashboard visualizes Arkiv data using React, React Query, Tailwind CSS, and shadcn/ui components.
 
 ```bash
-cd inf-demo/frontend/react-example
+cd dashboard-demo/frontend/react-example
 bun install
 bun run dev    # starts Vite dev server on http://localhost:5173 (by default)
 
@@ -110,7 +110,7 @@ The app is preconfigured to use the hosted Arkiv RPC endpoint defined in `src/fe
 The vanilla example is a static HTML/CSS/JS implementation that reads from the same Arkiv endpoint. Serve the directory with any static file server:
 
 ```bash
-cd inf-demo/frontend/vanilla-js-example
+cd dashboard-demo/frontend/vanilla-js-example
 
 # Example using Bun's built-in server
 bunx serve .
