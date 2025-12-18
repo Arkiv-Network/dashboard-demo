@@ -9,18 +9,30 @@ export function LatestBlockHighlight() {
     return (
       <HighlightCard
         title="Latest block"
+        variant="orange"
         value={
-          <span className="block h-8 w-32 animate-pulse rounded bg-slate-400 mt-3" />
+          <span className="block h-7 w-32 animate-pulse rounded bg-white/30" />
         }
       />
     );
   }
 
   if (isError || !latestBlock) {
-    return <HighlightCard title="Latest block" value="Unavailable" isError />;
+    return (
+      <HighlightCard
+        title="Latest block"
+        value="Unavailable"
+        variant="orange"
+        isError
+      />
+    );
   }
 
   return (
-    <HighlightCard title="Latest block" value={`#${latestBlock.blockNumber}`} />
+    <HighlightCard
+      title="Latest block"
+      value={`#${latestBlock.blockNumber}`}
+      variant="orange"
+    />
   );
 }

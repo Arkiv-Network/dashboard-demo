@@ -13,46 +13,38 @@ import AverageTransactionsHighlight from "./features/transactions/components/Ave
 function App() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background">
-      <header className="relative overflow-hidden bg-linear-to-br from-slate-950 via-indigo-950 to-purple-800 pb-40 pt-12 text-white shadow-2xl shadow-indigo-950/40">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.25),transparent_60%)]" />
-        <div className="pointer-events-none absolute inset-x-0 -bottom-40 h-72 bg-linear-to-b from-white/20 via-white/8 to-transparent blur-3xl" />
+      {/* Background image - top right */}
+      <img
+        src={`${import.meta.env.BASE_URL}blocks.webp`}
+        alt=""
+        className="pointer-events-none absolute right-0 top-0 z-0 h-[500px] xl:h-[600px] 2xl:h-[750px] select-none"
+      />
+      <header className="relative overflow-hidden bg-transparent pb-40 pt-12 text-grey-900">
         <div className="relative z-10 mx-auto max-w-[1600px] px-3 sm:px-10">
-          <div className="flex flex-col gap-10">
-            <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] md:items-center">
-              <div className="space-y-6">
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1 text-[0.75rem] font-semibold uppercase tracking-[0.35em] text-white/75">
-                  Built with{" "}
-                  <a
-                    href="https://arkiv.network"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="-m-4 p-4 z-1 relative inline-block"
-                  >
-                    <img
-                      src={`${import.meta.env.BASE_URL}arkiv-logo.svg`}
-                      alt="Arkiv Logo"
-                      className="w-14"
-                    />
-                  </a>
-                </span>
-                <div className="space-y-6">
-                  <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl text-balance">
-                    Ethereum Dashboard powered by Arkiv
-                  </h1>
-                  <p className="max-w-2xl text-base text-white/80 sm:text-lg">
-                    Monitor Ethereum&apos;s latest blocks, transaction flow, and
-                    gas price shifts through Arkiv&apos;s real-time data
-                    snapshots.
-                  </p>
-                </div>
-              </div>
+          <div className="flex flex-col gap-10 ">
+            <div className="space-y-6 rounded-2xl bg-background/80 backdrop-blur-sm p-6 sm:p-8 lg:max-w-[75%] xl:max-w-[50%]">
+              <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl text-balance">
+                Ethereum Dashboard powered by{" "}
+                <a
+                  className="text-orange-600 hover:scale-105 inline-block transition-all"
+                  href="https://arkiv.network"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  [ARKIV]
+                </a>
+              </h1>
+              <p className="text-base text-grey-600 sm:text-lg">
+                Monitor Ethereum&apos;s latest blocks, transaction flow, and gas
+                price shifts through Arkiv&apos;s real-time data snapshots.
+              </p>
+            </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <LatestBlockHighlight />
-                <AverageGasPriceHighlight />
-                <AverageTransactionsHighlight />
-                <CurrentGasPriceHighlight />
-              </div>
+            <div className="grid gap-4 grid-cols-2 lg:grid-cols-[repeat(4,minmax(0,250px))] md:pl-8">
+              <LatestBlockHighlight />
+              <AverageTransactionsHighlight />
+              <AverageGasPriceHighlight />
+              <CurrentGasPriceHighlight />
             </div>
           </div>
         </div>
@@ -83,24 +75,24 @@ function App() {
         </div>
       </div>
 
-      <footer className="border-t border-border bg-background py-8">
+      <footer className="bg-blue-500 py-8">
         <div className="mx-auto max-w-[1600px] px-3 sm:px-10 lg:px-16">
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-center text-sm text-white">
             Built with{" "}
             <a
               href="https://arkiv.network"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-foreground underline-offset-4 hover:underline"
+              className="font-medium text-white underline-offset-4 hover:underline"
             >
-              Arkiv
+              [ARKIV]
             </a>{" "}
             ·{" "}
             <a
               href="https://github.com/arkiv-network/dashboard-demo"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-foreground underline-offset-4 hover:underline"
+              className="font-medium text-white underline-offset-4 hover:underline"
             >
               View on GitHub
             </a>

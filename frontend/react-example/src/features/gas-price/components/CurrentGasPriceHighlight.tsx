@@ -9,8 +9,9 @@ export default function CurrentGasPriceHighlight() {
     return (
       <HighlightCard
         title="Current Gas Price"
+        variant="blue"
         value={
-          <span className="block h-8 w-32 animate-pulse rounded bg-slate-400 mt-3" />
+          <span className="block h-7 w-32 animate-pulse rounded bg-white/30" />
         }
       />
     );
@@ -18,13 +19,19 @@ export default function CurrentGasPriceHighlight() {
 
   if (isError || !latestBlock) {
     return (
-      <HighlightCard title="Current Gas Price" value="Unavailable" isError />
+      <HighlightCard
+        title="Current Gas Price"
+        value="Unavailable"
+        variant="blue"
+        isError
+      />
     );
   }
 
   return (
     <HighlightCard
       title="Current Gas Price"
+      variant="blue"
       value={`${(Number(latestBlock.gasPrice) / 1_000_000_000).toFixed(
         3
       )} Gwei`}

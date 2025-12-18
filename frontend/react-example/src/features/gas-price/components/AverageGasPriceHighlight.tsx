@@ -1,6 +1,6 @@
+import { useMemo } from "react";
 import { HighlightCard } from "@/components/HighlightCard";
 import { useGasPriceChartData } from "../hooks/useGasPriceChartData";
-import { useMemo } from "react";
 
 export default function AverageGasPriceHighlight() {
   const { data, isLoading, isError } = useGasPriceChartData("daily");
@@ -19,18 +19,30 @@ export default function AverageGasPriceHighlight() {
     return (
       <HighlightCard
         title="Avg Gas (30d)"
+        variant="blue"
         value={
-          <span className="block h-8 w-32 animate-pulse rounded bg-slate-400 mt-3" />
+          <span className="block h-7 w-32 animate-pulse rounded bg-white/30" />
         }
       />
     );
   }
 
   if (isError || isNaN(average)) {
-    return <HighlightCard title="Avg Gas (30d)" value="Unavailable" isError />;
+    return (
+      <HighlightCard
+        title="Avg Gas (30d)"
+        value="Unavailable"
+        variant="blue"
+        isError
+      />
+    );
   }
 
   return (
-    <HighlightCard title="Avg Gas (30d)" value={`${average.toFixed(3)} Gwei`} />
+    <HighlightCard
+      title="Avg Gas (30d)"
+      value={`${average.toFixed(3)} Gwei`}
+      variant="blue"
+    />
   );
 }

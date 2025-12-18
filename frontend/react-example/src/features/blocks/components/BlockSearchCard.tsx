@@ -143,12 +143,7 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
   }
 
   return (
-    <Card
-      className={cn(
-        "border-violet-200/70 bg-white/95 shadow-2xl shadow-violet-200/60 backdrop-blur",
-        className
-      )}
-    >
+    <Card className={cn("bg-card", className)}>
       <CardHeader>
         <div className="flex items-start justify-between gap-3">
           <div>
@@ -170,7 +165,7 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
               <Input
                 aria-label="Block number"
                 inputMode="numeric"
-                className="border-violet-200/70 bg-white/80"
+                className=" bg-white/80"
                 placeholder="Enter block number"
                 value={inputValue}
                 onChange={(event) => setInputValue(event.target.value)}
@@ -216,7 +211,7 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
                   href={`https://etherscan.io/block/${data.blockNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-mono text-lg font-semibold text-sky-700 hover:text-sky-900 inline-flex items-center gap-1"
+                  className="font-mono text-lg font-semibold text-blue-700 hover:text-blue-900 inline-flex items-center gap-1"
                 >
                   #{data.blockNumber}
                   <ExternalLink className="size-4" />
@@ -226,7 +221,7 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
                 {details.map((item) => (
                   <div
                     key={item.label}
-                    className="rounded-xl border border-violet-100/80 bg-white/80 px-3 py-2"
+                    className="rounded-xl bg-grey-50 px-3 py-2"
                   >
                     <dt className="text-muted-foreground mb-1 uppercase tracking-wide">
                       {item.label}
@@ -237,7 +232,7 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
                           href={item.linkTo}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sky-700 hover:text-sky-900 inline-flex items-center justify-center gap-1"
+                          className="text-blue-700 hover:text-blue-900 inline-flex items-center justify-center gap-1"
                         >
                           {item.value}
                           <ExternalLink className="size-4" />
@@ -271,7 +266,7 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
             <button
               type="button"
               onClick={() => handleRangeClick(blockRange.minBlockNumber)}
-              className="font-mono text-sky-700 hover:text-sky-900 hover:underline focus:underline focus:outline-none cursor-pointer"
+              className="font-mono text-blue-700 hover:text-blue-900 hover:underline focus:underline focus:outline-none cursor-pointer"
             >
               {blockRange.minBlockNumber}
             </button>{" "}
@@ -279,7 +274,7 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
             <button
               type="button"
               onClick={() => handleRangeClick(blockRange.maxBlockNumber)}
-              className="font-mono text-sky-700 hover:text-sky-900 hover:underline focus:underline focus:outline-none cursor-pointer"
+              className="font-mono text-blue-700 hover:text-blue-900 hover:underline focus:underline focus:outline-none cursor-pointer"
             >
               {blockRange.maxBlockNumber}
             </button>

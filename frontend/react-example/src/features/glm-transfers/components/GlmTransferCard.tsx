@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,8 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
 
 import { cn } from "@/lib/utils";
 
@@ -33,12 +31,7 @@ export function GlmTransferCard({ className }: GlmTransferCardProps) {
   const timeframeLabel = timeframe === "daily" ? "30 days" : "7 days";
 
   return (
-    <Card
-      className={cn(
-        "border-purple-200/60 bg-white/80 shadow-2xl shadow-purple-200/70 backdrop-blur",
-        className
-      )}
-    >
+    <Card className={cn("bg-card", className)}>
       <CardHeader className="flex flex-row flex-wrap items-start justify-between gap-4">
         <div className="space-y-1">
           <CardTitle className="text-xl">
@@ -49,22 +42,20 @@ export function GlmTransferCard({ className }: GlmTransferCardProps) {
             volume.
           </CardDescription>
         </div>
-        <ButtonGroup>
+        <div className="flex items-center gap-3 rounded-2xl bg-grey-50 p-2">
           <Button
-            variant={timeframe === "hourly" ? "default" : "outline"}
-            size="sm"
+            variant={timeframe === "hourly" ? "secondary" : "ghost-black"}
             onClick={() => setTimeframe("hourly")}
           >
             Hourly
           </Button>
           <Button
-            variant={timeframe === "daily" ? "default" : "outline"}
-            size="sm"
+            variant={timeframe === "daily" ? "secondary" : "ghost-black"}
             onClick={() => setTimeframe("daily")}
           >
             Daily
           </Button>
-        </ButtonGroup>
+        </div>
       </CardHeader>
       <CardContent>
         {isError ? (

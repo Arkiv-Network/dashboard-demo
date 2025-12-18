@@ -1,5 +1,5 @@
-import { HighlightCard } from "@/components/HighlightCard";
 import { useMemo } from "react";
+import { HighlightCard } from "@/components/HighlightCard";
 import { useTransactionHistory } from "../hooks/useTransactionHistory";
 
 export default function AverageTransactionsHighlight() {
@@ -16,8 +16,9 @@ export default function AverageTransactionsHighlight() {
     return (
       <HighlightCard
         title="Avg Daily Transactions"
+        variant="orange"
         value={
-          <span className="block h-8 w-32 animate-pulse rounded bg-slate-400 mt-3" />
+          <span className="block h-7 w-32 animate-pulse rounded bg-white/30" />
         }
       />
     );
@@ -28,6 +29,7 @@ export default function AverageTransactionsHighlight() {
       <HighlightCard
         title="Avg Daily Transactions"
         value="Unavailable"
+        variant="orange"
         isError
       />
     );
@@ -37,6 +39,7 @@ export default function AverageTransactionsHighlight() {
     <HighlightCard
       title="Avg Daily Transactions"
       value={average.toLocaleString()}
+      variant="orange"
     />
   );
 }

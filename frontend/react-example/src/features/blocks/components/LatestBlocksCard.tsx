@@ -27,7 +27,7 @@ type LatestBlocksCardProps = {
 
 const TableHeaderRow = () => (
   <TableHeader>
-    <TableRow className="bg-sky-100/70 text-sky-900">
+    <TableRow className="bg-blue-100/70 text-blue-900">
       <TableHead className="w-[15%]">Block</TableHead>
       <TableHead className="w-[25%]">Timestamp</TableHead>
       <TableHead className="w-[25%]">Miner</TableHead>
@@ -38,7 +38,7 @@ const TableHeaderRow = () => (
 );
 
 const SkeletonRow = () => (
-  <TableRow className="hover:bg-sky-100/40">
+  <TableRow className="hover:bg-blue-100/40">
     <TableCell>
       <div className="h-5 w-24 animate-pulse rounded bg-slate-200" />
     </TableCell>
@@ -68,16 +68,13 @@ const EmptyRow = ({ children }: { children: React.ReactNode }) => (
 const BlockListSkeleton = () => (
   <div className="space-y-3">
     {[...Array(4)].map((_, index) => (
-      <div
-        key={index}
-        className="animate-pulse rounded-xl border border-sky-100 bg-white/70 p-4 shadow-sm"
-      >
+      <div key={index} className="animate-pulse rounded-xl bg-grey-50 p-4">
         <div className="flex flex-col gap-3">
-          <div className="h-4 w-20 rounded bg-slate-200" />
-          <div className="h-4 w-44 rounded bg-slate-200" />
-          <div className="h-4 w-32 rounded bg-slate-200" />
-          <div className="h-4 w-16 rounded bg-slate-200" />
-          <div className="h-4 w-36 rounded bg-slate-200" />
+          <div className="h-4 w-20 rounded bg-grey-200" />
+          <div className="h-4 w-44 rounded bg-grey-200" />
+          <div className="h-4 w-32 rounded bg-grey-200" />
+          <div className="h-4 w-16 rounded bg-grey-200" />
+          <div className="h-4 w-36 rounded bg-grey-200" />
         </div>
       </div>
     ))}
@@ -95,36 +92,29 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
   const { data, isPending, isError, isFetching } = useLatestBlocks();
 
   return (
-    <Card
-      className={cn(
-        "border-sky-200/70 bg-white/95 shadow-2xl shadow-sky-200/60 backdrop-blur",
-        className
-      )}
-    >
+    <Card className={cn("bg-card", className)}>
       <CardHeader>
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <CardTitle className="text-xl">Latest Blocks</CardTitle>
-            <CardDescription>
-              Real-time snapshots of the most recent blocks mined on Ethereum.
-              Refreshes every 15 seconds.
-            </CardDescription>
-          </div>
+        <div className="flex items-center justify-between gap-3">
+          <CardTitle className="text-xl">Latest Blocks</CardTitle>
           <div className="flex items-center gap-2">
             {isFetching && !isPending && (
-              <div className="flex items-center gap-1.5 text-xs text-sky-700">
-                <div className="h-2 w-2 animate-pulse rounded-full bg-sky-600" />
+              <div className="flex items-center gap-1.5 text-xs text-blue-700">
+                <div className="h-2 w-2 animate-pulse rounded-full bg-blue-600" />
                 <span>Updating...</span>
               </div>
             )}
-            <span className="rounded-full bg-sky-200/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-sky-900">
+            <span className="rounded-full bg-blue-200/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-900">
               Live feed
             </span>
           </div>
         </div>
+        <CardDescription>
+          Real-time snapshots of the most recent blocks mined on Ethereum.
+          Refreshes every 15 seconds.
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <Table className="text-sm">
             <TableHeaderRow />
             <TableBody>
@@ -146,7 +136,7 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
                 data.map((block) => (
                   <TableRow
                     key={block.blockHash}
-                    className="hover:bg-sky-100/40"
+                    className="hover:bg-blue-100/40"
                   >
                     <TableCell className="font-semibold text-slate-900">
                       <a
@@ -154,7 +144,7 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
                         target="_blank"
                         rel="noreferrer"
                         title="View block on Etherscan"
-                        className="text-sky-700 hover:text-sky-900 inline-flex items-center gap-1"
+                        className="text-blue-700 hover:text-blue-900 inline-flex items-center gap-1"
                       >
                         #{block.blockNumber}
                         <ExternalLink className="size-4" />
@@ -169,7 +159,7 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
                         target="_blank"
                         rel="noreferrer"
                         title="View address on Etherscan"
-                        className="text-sky-700 hover:text-sky-900 inline-flex items-center justify-center gap-1"
+                        className="text-blue-700 hover:text-blue-900 inline-flex items-center justify-center gap-1"
                       >
                         <span className="hidden sm:inline">{`${block.miner.slice(
                           0,
@@ -183,7 +173,7 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
                         href={`https://explorer.infurademo.hoodi.arkiv.network/entity/${block.arkivEntityKey}?tab=data`}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center justify-center text-sky-700 hover:text-sky-900 gap-1"
+                        className="inline-flex items-center justify-center text-blue-700 hover:text-blue-900 gap-1"
                         title="View entity in Arkiv Explorer"
                       >
                         <span className="hidden sm:inline">{`${block.arkivEntityKey.slice(
@@ -203,7 +193,7 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
           </Table>
         </div>
 
-        <div className="md:hidden">
+        <div className="lg:hidden">
           {isPending ? (
             <BlockListSkeleton />
           ) : isError ? (
@@ -211,7 +201,7 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
               Something went wrong. Please try again later.
             </div>
           ) : !data?.length ? (
-            <div className="rounded-xl border border-slate-200 bg-white/70 p-4 text-sm text-muted-foreground">
+            <div className="rounded-xl bg-grey-50 p-4 text-sm text-muted-foreground">
               No block data is available yet.
             </div>
           ) : (
@@ -219,34 +209,34 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
               {data.map((block) => (
                 <article
                   key={block.arkivEntityKey}
-                  className="rounded-xl border border-sky-100 bg-white/80 p-4 shadow-sm shadow-sky-100/70"
+                  className="rounded-xl bg-grey-50 p-4"
                 >
                   <div className="flex flex-col gap-3 text-sm">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold uppercase tracking-wide text-sky-600">
+                      <span className="text-xs font-semibold uppercase tracking-wide text-grey-600">
                         Block
                       </span>
-                      <span className="font-semibold text-slate-900">
+                      <span className="font-semibold text-grey-900">
                         #{block.blockNumber}
                       </span>
                     </div>
                     <div className="flex items-start justify-between gap-3">
-                      <span className="text-xs font-semibold uppercase tracking-wide text-sky-600">
+                      <span className="text-xs font-semibold uppercase tracking-wide text-grey-600">
                         Timestamp
                       </span>
-                      <span className="text-right text-[0.9rem] text-slate-600">
+                      <span className="text-right text-[0.9rem] text-grey-700">
                         {formatTimestamp(block.timestamp)}
                       </span>
                     </div>
                     <div className="flex items-start justify-between gap-3">
-                      <span className="text-xs font-semibold uppercase tracking-wide text-sky-600">
+                      <span className="text-xs font-semibold uppercase tracking-wide text-grey-600">
                         Miner
                       </span>
                       <a
                         href={`https://etherscan.io/address/${block.miner}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-sky-700 hover:text-sky-900"
+                        className="inline-flex items-center gap-1 text-blue-700 hover:text-blue-900"
                         title="View address on Etherscan"
                       >
                         <span className="font-mono text-[0.85rem]">
@@ -256,22 +246,22 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
                       </a>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold uppercase tracking-wide text-sky-600">
+                      <span className="text-xs font-semibold uppercase tracking-wide text-grey-600">
                         Tx Count
                       </span>
-                      <span className="font-mono text-base text-slate-900">
+                      <span className="font-mono text-base text-grey-900">
                         {block.transactionCount.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex items-start justify-between gap-3">
-                      <span className="text-xs font-semibold uppercase tracking-wide text-sky-600">
+                      <span className="text-xs font-semibold uppercase tracking-wide text-grey-600">
                         Arkiv Entity
                       </span>
                       <a
                         href={`https://explorer.infurademo.hoodi.arkiv.network/entity/${block.arkivEntityKey}?tab=data`}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-sky-700 hover:text-sky-900"
+                        className="inline-flex items-center gap-1 text-blue-700 hover:text-blue-900"
                         title="View entity in Arkiv Explorer"
                       >
                         <span className="font-mono text-[0.85rem]">
