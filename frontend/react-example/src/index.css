@@ -4,6 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-sans: "IBM Plex Mono", ui-monospace, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -117,4 +119,43 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* arkiv colors */
+@theme {
+  /* Orange */
+  --color-orange-50: #fff1ec;
+  --color-orange-100: #ffd4c5;
+  --color-orange-200: #ffbfa9;
+  --color-orange-300: #fea282;
+  --color-orange-400: #fe906a;
+  --color-orange-500: #fe7445;
+  --color-orange-600: #e76a3f;
+  --color-orange-700: #b45231;
+  --color-orange-800: #8c4026;
+  --color-orange-900: #6b311d;
+
+  /* Grey */
+  --color-grey-50: #ededed;
+  --color-grey-100: #c7c7c7;
+  --color-grey-200: #acacac;
+  --color-grey-300: #868686;
+  --color-grey-400: #6e6e6e;
+  --color-grey-500: #4a4a4a;
+  --color-grey-600: #434343;
+  --color-grey-700: #353535;
+  --color-grey-800: #292929;
+  --color-grey-900: #1f1f1f;
+
+  /* Blue */
+  --color-blue-50: #e8e9f6;
+  --color-blue-100: #b7b9e4;
+  --color-blue-200: #9598d7;
+  --color-blue-300: #6468c5;
+  --color-blue-400: #464bba;
+  --color-blue-500: #181ea9;
+  --color-blue-600: #161b9a;
+  --color-blue-700: #111578;
+  --color-blue-800: #0d115d;
+  --color-blue-900: #0a0d47;
 }
