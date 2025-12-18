@@ -75,28 +75,77 @@ function App() {
         </div>
       </div>
 
-      <footer className="bg-blue-500 py-8">
+      <footer className="bg-blue-500 py-12 text-white">
         <div className="mx-auto max-w-[1600px] px-3 sm:px-10 lg:px-16">
-          <p className="text-center text-sm text-white">
-            Built with{" "}
+          <div className="grid gap-10 lg:grid-cols-[1fr_auto]">
             <a
               href="https://arkiv.network"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-white underline-offset-4 hover:underline"
+              className="text-4xl font-bold tracking-tight hover:opacity-80 transition-opacity sm:text-7xl"
             >
-              [ARKIV]
-            </a>{" "}
-            ·{" "}
+              [ ARKIV ]
+            </a>
+
+            <div className="space-y-4">
+              <h3 className="font-semibold">Arkiv</h3>
+              <ul className="space-y-2 text-sm text-blue-100">
+                <li>
+                  <a
+                    href="https://docs.arkiv.network"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    Docs
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/arkiv-network"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    GitHub
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://twitter.com/arkivnetwork"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    X
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://discord.gg/arkiv"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    Discord
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-10 flex flex-col gap-2 border-t border-blue-400/30 pt-6 text-sm text-blue-100 sm:flex-row sm:items-center sm:justify-between">
+            <p>© 2025 Arkiv</p>
             <a
               href="https://github.com/arkiv-network/dashboard-demo"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-white underline-offset-4 hover:underline"
+              className="hover:text-white transition-colors"
             >
-              View on GitHub
+              View source on GitHub
             </a>
-          </p>
+            <p>All rights reserved</p>
+          </div>
         </div>
       </footer>
     </div>
