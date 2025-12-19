@@ -92,7 +92,7 @@ function App() {
               <ul className="space-y-2 text-sm text-blue-100">
                 <li>
                   <a
-                    href="https://docs.arkiv.network"
+                    href="https://arkiv.network/docs"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"
