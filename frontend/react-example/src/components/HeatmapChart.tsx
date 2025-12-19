@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 const hours = Array.from({ length: 24 }, (_, index) => index);
 
 const dayFormatter = new Intl.DateTimeFormat(undefined, {
-  weekday: "short",
+  // weekday: "short",
   month: "short",
   day: "numeric",
 });
