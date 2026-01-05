@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  feed-data:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dashboard-demo-feed-data
+    restart: on-failure
+    environment:
+      - ARKIV_CHAIN=${ARKIV_CHAIN:-infurademo}
+      - ARKIV_PRIVATE_KEY=${ARKIV_PRIVATE_KEY}
+      - ETH_RPC_URL=${ETH_RPC_URL}
+      - POLL_INTERVAL_MS=${POLL_INTERVAL_MS:-1000}
+    env_file:
+      - .env
