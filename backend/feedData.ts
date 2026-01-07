@@ -235,6 +235,7 @@ async function collectLatestOnce() {
 		console.log("✅ Up to date; no new blocks to store");
 		return { stored: 0 };
 	}
+	blocksToStore.reverse();
 
 	// Store in batches of 100
 	console.log("\n💾 Storing new blocks in Arkiv...");
