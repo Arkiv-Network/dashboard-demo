@@ -3,13 +3,13 @@ name: Deploy Feed Data Service
 on:
   push:
     branches:
-      - feature/backend-deployment
+      - main
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/feature/backend-deployment' && 'production' || 'staging' }}
+    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
 
     steps:
       - name: Checkout code
