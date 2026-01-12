@@ -47,7 +47,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/app/dashboard-demo/backend
-            docker compose down
             docker compose build
+            docker compose down
             docker compose up -d
             docker compose logs --tail=50 feed-data
