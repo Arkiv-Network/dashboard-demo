@@ -1,0 +1,53 @@
+name: Deploy Feed Data Service
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Copy backend code to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "backend/*"
+          target: "/home/app/dashboard-demo/"
+          strip_components: 0
+          rm: true
+
+      - name: Create .env file on server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/app/dashboard-demo/backend
+            printf 'ARKIV_PRIVATE_KEY=%s\nETH_RPC_URL=%s\n' \
+              "${{ secrets.ARKIV_PRIVATE_KEY }}" \
+              "${{ vars.ETH_RPC_URL }}" > .env
+            chmod 600 .env  # Secure the .env file
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/app/dashboard-demo/backend
+            docker compose build
+            docker compose down
+            docker compose up -d
+            docker compose logs --tail=50 feed-data
