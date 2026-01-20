@@ -1,20 +1,19 @@
 import { AlertCircle, ChevronRight, ExternalLink } from "lucide-react";
 import type { FormEvent } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import * as z from "zod/v4";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useBlockDetails } from "../hooks/useBlockDetails";
-import { useBlockRange } from "../hooks/useBlockRange";
+import { useLatestBlocks } from "../hooks/useLatestBlocks";
 
 type BlockSearchCardProps = {
   className?: string;
@@ -41,63 +40,65 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
   const [searchNumber, setSearchNumber] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
 
-  const { data: blockRange, isPending: isLoadingRange } = useBlockRange();
-  const { data, isPending, isError, error } = useBlockDetails(searchNumber);
+  const { data: latestBlocks, isPending: isLoadingRange } = useLatestBlocks();
+
+  const {
+    data: blockDetails,
+    isPending,
+    isError,
+    error,
+  } = useBlockDetails(searchNumber);
 
   // Only show loading state on initial load, not on refetches
-  const showLoadingState = isLoadingRange && !blockRange;
+  const showLoadingState = isLoadingRange && !latestBlocks;
 
   // Set default search number to the max indexed block when range is available
+  const latestBlock = latestBlocks?.[0];
   useEffect(() => {
-    if (blockRange && searchNumber === null) {
-      setSearchNumber(String(blockRange.maxBlockNumber));
-      setInputValue(String(blockRange.maxBlockNumber));
+    if (latestBlock && searchNumber === null) {
+      setSearchNumber(String(latestBlock.blockNumber));
+      setInputValue(String(latestBlock.blockNumber));
     }
-  }, [blockRange, searchNumber]);
+  }, [latestBlock, searchNumber]);
 
-  const details = useMemo(() => {
-    if (!data) {
-      return [];
-    }
-
-    const items: FieldDescriptor[] = [
-      { label: "Timestamp", value: String(data.timestamp) },
+  let fieldDescriptors: FieldDescriptor[] = [];
+  if (blockDetails) {
+    fieldDescriptors = [
+      { label: "Timestamp", value: String(blockDetails.timestamp) },
       {
         label: "Miner",
-        value: `${data.miner.slice(0, 8)}…${data.miner.slice(-6)}`,
-        linkTo: `https://etherscan.io/address/${data.miner}`,
+        value: `${blockDetails.miner.slice(0, 8)}…${blockDetails.miner.slice(-6)}`,
+        linkTo: `https://etherscan.io/address/${blockDetails.miner}`,
       },
       {
         label: "Base Fee (Gwei)",
-        value: Number(data.baseFeePerGas) / 1_000_000_000, // wei -> gwei
+        value: Number(blockDetails.baseFeePerGas) / 1_000_000_000, // wei -> gwei
       },
       {
         label: "Gas Used",
-        value: Number(data.gasUsed).toLocaleString(),
+        value: Number(blockDetails.gasUsed).toLocaleString(),
       },
       {
         label: "Tx Count",
-        value: data.transactionCount.toLocaleString(),
+        value: blockDetails.transactionCount.toLocaleString(),
       },
       {
         label: "Size",
-        value: `${(Number(data.size) / 1024).toFixed(1)} KB`,
+        value: `${(Number(blockDetails.size) / 1024).toFixed(1)} KB`,
       },
       {
         label: "Parent Hash",
-        value: `${data.parentHash.slice(0, 8)}…${data.parentHash.slice(-6)}`,
+        value: `${blockDetails.parentHash.slice(0, 8)}…${blockDetails.parentHash.slice(-6)}`,
       },
       {
         label: "Arkiv Entity",
-        value: `${data.arkivEntityKey.slice(0, 8)}…${data.arkivEntityKey.slice(
-          -6
+        value: `${blockDetails.arkivEntityKey.slice(0, 8)}…${blockDetails.arkivEntityKey.slice(
+          -6,
         )}`,
-        linkTo: `https://explorer.infurademo.hoodi.arkiv.network/entity/${data.arkivEntityKey}?tab=data`,
+        linkTo: `https://explorer.infurademo.hoodi.arkiv.network/entity/${blockDetails.arkivEntityKey}?tab=data`,
       },
     ];
-
-    return items;
-  }, [data]);
+  }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -112,34 +113,24 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
     const parseResult = BlockNumberStringSchema.safeParse(trimmed);
     if (!parseResult.success) {
       setFormError(
-        parseResult.error.issues[0]?.message || "Invalid block number"
+        parseResult.error.issues[0]?.message || "Invalid block number",
       );
       setSearchNumber("");
       return;
     }
 
-    // Validate against block range if available
-    if (blockRange) {
-      const blockNum = Number(parseResult.data);
-      if (
-        blockNum < blockRange.minBlockNumber ||
-        blockNum > blockRange.maxBlockNumber
-      ) {
-        setFormError(
-          `Block must be indexed on Arkiv (between ${blockRange.minBlockNumber} and ${blockRange.maxBlockNumber})`
-        );
-        setSearchNumber("");
-        return;
-      }
+    if (
+      latestBlock &&
+      Number(parseResult.data) > Number(latestBlock.blockNumber)
+    ) {
+      setFormError(
+        `Block number exceeds latest indexed block (${latestBlock.blockNumber})`,
+      );
+      setSearchNumber("");
+      return;
     }
 
     setSearchNumber(parseResult.data);
-  }
-
-  function handleRangeClick(blockNumber: number) {
-    setSearchNumber(String(blockNumber));
-    setInputValue(String(blockNumber));
-    setFormError(null);
   }
 
   return (
@@ -155,36 +146,37 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
         </div>
       </CardHeader>
       <CardContent>
-        <form
-          className="flex flex-col gap-3 sm:flex-row"
-          onSubmit={handleSubmit}
-          role="search"
-        >
-          <div className="flex flex-col w-full ">
-            <div className="flex items-center gap-2">
-              <Input
-                aria-label="Block number"
-                inputMode="numeric"
-                className=" bg-white/80"
-                placeholder="Enter block number"
-                value={inputValue}
-                onChange={(event) => setInputValue(event.target.value)}
-                disabled={showLoadingState}
-              />
-              <Button
-                type="submit"
-                className="shrink-0"
-                disabled={showLoadingState}
-              >
-                Search
-                <ChevronRight className="size-4" />
-              </Button>
+        <search>
+          <form
+            className="flex flex-col gap-3 sm:flex-row"
+            onSubmit={handleSubmit}
+          >
+            <div className="flex flex-col w-full ">
+              <div className="flex items-center gap-2">
+                <Input
+                  aria-label="Block number"
+                  inputMode="numeric"
+                  className=" bg-white/80"
+                  placeholder="Enter block number"
+                  value={inputValue}
+                  onChange={(event) => setInputValue(event.target.value)}
+                  disabled={showLoadingState}
+                />
+                <Button
+                  type="submit"
+                  className="shrink-0"
+                  disabled={showLoadingState}
+                >
+                  Search
+                  <ChevronRight className="size-4" />
+                </Button>
+              </div>
+              {formError && (
+                <p className="mt-1 text-sm text-destructive">{formError}</p>
+              )}
             </div>
-            {formError && (
-              <p className="mt-1 text-sm text-destructive">{formError}</p>
-            )}
-          </div>
-        </form>
+          </form>
+        </search>
         <div className="mt-6 space-y-4">
           {showLoadingState ? (
             <div className="flex min-h-36 items-center justify-center text-sm text-muted-foreground">
@@ -203,22 +195,22 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
                   : "We could not find that block."}
               </span>
             </div>
-          ) : data ? (
+          ) : blockDetails ? (
             <div className="space-y-2 text-sm">
               <div className="flex items-baseline justify-between gap-2">
                 <span className="text-muted-foreground">Block Number</span>
                 <a
-                  href={`https://etherscan.io/block/${data.blockNumber}`}
+                  href={`https://etherscan.io/block/${blockDetails.blockNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-mono text-lg font-semibold text-blue-700 hover:text-blue-900 inline-flex items-center gap-1"
                 >
-                  #{data.blockNumber}
+                  #{blockDetails.blockNumber}
                   <ExternalLink className="size-4" />
                 </a>
               </div>
               <dl className="grid grid-cols-1 gap-3 text-xs sm:grid-cols-2">
-                {details.map((item) => (
+                {fieldDescriptors.map((item) => (
                   <div
                     key={item.label}
                     className="rounded-xl bg-grey-50 px-3 py-2"
@@ -245,6 +237,11 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
                 ))}
               </dl>
             </div>
+          ) : blockDetails === null ? (
+            <div className="flex min-h-36 items-center justify-center text-sm text-muted-foreground">
+              Block #{searchNumber} not found. Perhaps it has not been indexed
+              yet.
+            </div>
           ) : (
             <div className="flex min-h-36 items-center justify-center text-sm text-muted-foreground">
               Enter a block number to see full details.
@@ -252,35 +249,6 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
           )}
         </div>
       </CardContent>
-      <CardFooter className="mt-auto">
-        {showLoadingState ? (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <div className="h-4 w-32 animate-pulse rounded bg-slate-200" />
-            <div className="h-4 w-16 animate-pulse rounded bg-slate-200" />
-            <div className="h-4 w-4 animate-pulse rounded bg-slate-200" />
-            <div className="h-4 w-16 animate-pulse rounded bg-slate-200" />
-          </div>
-        ) : blockRange ? (
-          <div className="text-muted-foreground inline-flex items-center gap-1 text-sm">
-            Blocks indexed on Arkiv:{" "}
-            <button
-              type="button"
-              onClick={() => handleRangeClick(blockRange.minBlockNumber)}
-              className="font-mono text-blue-700 hover:text-blue-900 hover:underline focus:underline focus:outline-none cursor-pointer"
-            >
-              {blockRange.minBlockNumber}
-            </button>{" "}
-            to{" "}
-            <button
-              type="button"
-              onClick={() => handleRangeClick(blockRange.maxBlockNumber)}
-              className="font-mono text-blue-700 hover:text-blue-900 hover:underline focus:underline focus:outline-none cursor-pointer"
-            >
-              {blockRange.maxBlockNumber}
-            </button>
-          </div>
-        ) : null}
-      </CardFooter>
     </Card>
   );
 }

@@ -83,7 +83,7 @@ Use the Arkiv SDK's query builder to fetch entities. It's recommended to use a l
  Here's an example fetching the latest blocks ([`useLatestBlocks.ts`](./src/features/blocks/hooks/useLatestBlocks.ts)):
 
 ```typescript
-import { desc, eq } from "@arkiv-network/sdk/query";
+import { eq } from "@arkiv-network/sdk/query";
 import { useQuery } from "@tanstack/react-query";
 
 export function useLatestBlocks() {
@@ -100,7 +100,6 @@ export function useLatestBlocks() {
           eq("EthDemo_version", protocolVersion),
           eq("EthDemo_dataType", "blockdata"),
         ])
-        .orderBy(desc("EthDemo_blockTimestamp", "number"))
         .limit(10)
         .ownedBy(entityOwner)
         .withPayload()

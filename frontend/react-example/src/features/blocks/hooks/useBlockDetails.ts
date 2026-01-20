@@ -3,9 +3,12 @@ import { type UseQueryResult, useQuery } from "@tanstack/react-query";
 import { useArkivClient } from "@/features/arkiv-client/hooks/useArkivClient";
 import { type BlockDetail, BlockDetailSchema } from "../types";
 
+/**
+ * Fetch details of a block. Returns null if the block is not found.
+ */
 export function useBlockDetails(
 	blockNumber: string | null,
-): UseQueryResult<BlockDetail> {
+): UseQueryResult<BlockDetail | null> {
 	const { client, entityOwner, protocolVersion } = useArkivClient();
 	return useQuery({
 		queryKey: ["block-details", entityOwner, protocolVersion, blockNumber],
@@ -28,7 +31,7 @@ export function useBlockDetails(
 				.fetch();
 			const entity = blockDetail.entities[0];
 			if (!entity) {
-				throw new Error(`Block #${blockNumber} not found`);
+				return null;
 			}
 			return BlockDetailSchema.parse({
 				arkivEntityKey: entity.key,

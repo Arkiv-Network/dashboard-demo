@@ -1,4 +1,4 @@
-import { asc, eq, gte } from "@arkiv-network/sdk/query";
+import { eq, gte } from "@arkiv-network/sdk/query";
 import { useQuery } from "@tanstack/react-query";
 import { useArkivClient } from "@/features/arkiv-client/hooks/useArkivClient";
 import { type HourlyStats, TimeSeriesStatsSchema } from "../types";
@@ -12,7 +12,10 @@ export function useTimeSeries(timeframe: "daily" | "hourly") {
 	return useQuery({
 		queryKey: ["time-series-data", entityOwner, protocolVersion, timeframe],
 		queryFn: async () => {
-			const timestampWeekAgo = Math.floor(Date.now() / 1000 - 7 * 24 * 60 * 60);
+			const timestamp =
+				timeframe === "hourly"
+					? Math.floor(Date.now() / 1000 - 7 * 24 * 60 * 60) // 7 days ago
+					: Math.floor(Date.now() / 1000 - 30 * 24 * 60 * 60); // 30 days ago
 			const stats = await client
 				.buildQuery()
 				.where([
@@ -20,10 +23,9 @@ export function useTimeSeries(timeframe: "daily" | "hourly") {
 					eq("EthDemo_version", protocolVersion),
 					eq("EthDemo_dataType", "stats"),
 					eq("EthDemo_statsType", timeframe),
-					gte("EthDemo_statsTimestamp", timestampWeekAgo),
+					gte("EthDemo_statsTimestamp", timestamp),
 				])
 				.limit(timeframe === "daily" ? 30 : 7 * 24)
-				.orderBy(asc("EthDemo_statsTimestamp", "number"))
 				.ownedBy(entityOwner)
 				.withPayload()
 				.withAttributes()
@@ -48,7 +50,8 @@ export function useTimeSeries(timeframe: "daily" | "hourly") {
 						return null;
 					}
 				})
-				.filter((point): point is HourlyStats => point !== null);
+				.filter((point): point is HourlyStats => point !== null)
+				.toSorted((a, b) => a.timestamp - b.timestamp);
 		},
 	});
 }
