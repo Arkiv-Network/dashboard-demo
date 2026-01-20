@@ -1,11 +1,11 @@
 import {
 	eq,
 	gte,
-} from "https://esm.sh/@arkiv-network/sdk@0.3.2-dev.1/query?target=es2022&bundle-deps";
+} from "https://esm.sh/@arkiv-network/sdk@0.5.3/query?target=es2022&bundle-deps";
 import {
 	createPublicClient,
 	http,
-} from "https://esm.sh/@arkiv-network/sdk@0.3.2-dev.1?target=es2022&bundle-deps";
+} from "https://esm.sh/@arkiv-network/sdk@0.5.3?target=es2022&bundle-deps";
 
 const ARKIV_CHAIN = {
 	id: 60138453045,
@@ -87,7 +87,6 @@ async function fetchLatestBlocks() {
 			eq("EthDemo_dataType", "blockdata"),
 		])
 		.limit(10)
-		.orderBy("EthDemo_blockTimestamp", "number", true)
 		.ownedBy(ENTITY_OWNER)
 		.withPayload()
 		.fetch();
@@ -98,7 +97,8 @@ async function fetchLatestBlocks() {
 
 	const blocks = response.entities
 		.map(normalizeBlockDetail)
-		.filter((block) => block !== null);
+		.filter((block) => block !== null)
+		.toSorted((a, b) => Number(b.blockNumber) - Number(a.blockNumber));
 
 	if (!blocks.length) {
 		throw new Error("No latest blocks available in Arkiv");
@@ -142,7 +142,11 @@ async function fetchStats(timeframe) {
 		throw new Error("Timeframe must be either daily or hourly");
 	}
 
-	const timestampWeekAgo = Math.floor(Date.now() / 1000 - 7 * 24 * 60 * 60);
+	// const timestampWeekAgo = Math.floor(Date.now() / 1000 - 7 * 24 * 60 * 60);
+	const timestamp = 
+		timeframe === "daily"
+			? Math.floor(Date.now() / 1000 - 30 * 24 * 60 * 60) // 30 days ago
+			: Math.floor(Date.now() / 1000 - 7 * 24 * 60 * 60); // 7 days ago
 
 	const response = await client
 		.buildQuery()
@@ -151,7 +155,7 @@ async function fetchStats(timeframe) {
 			eq("EthDemo_version", PROTOCOL_VERSION),
 			eq("EthDemo_dataType", "stats"),
 			eq("EthDemo_statsType", timeframe),
-			gte("EthDemo_statsTimestamp", timestampWeekAgo),
+			gte("EthDemo_statsTimestamp", timestamp),
 		])
 		.limit(timeframe === "daily" ? 30 : 7 * 24)
 		.ownedBy(ENTITY_OWNER)
