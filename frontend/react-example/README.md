@@ -10,37 +10,6 @@ First, create a public client by defining your chain configuration and initializ
 
 ```typescript
 import { createPublicClient, http } from "@arkiv-network/sdk";
-import type { Chain } from "@arkiv-network/sdk";
-
-const ARKIV_CHAIN: Chain = {
-  id: 60138453045,
-  name: "Arkiv EthDemo Testnet",
-  nativeCurrency: {
-    decimals: 18,
-    name: "Ether",
-    symbol: "ETH",
-  },
-  rpcUrls: {
-    default: {
-      http: [`https://infurademo.hoodi.arkiv.network/rpc`],
-      webSocket: [`wss://infurademo.hoodi.arkiv.network/rpc/ws`],
-    },
-  },
-};
-
-export function getArkivClient() {
-  const publicClient = createPublicClient({
-    transport: http(),
-    chain: ARKIV_CHAIN,
-  });
-
-  return publicClient;
-}
-```
-
-In this project, we use a non-standard Arkiv testnet called "Arkiv EthDemo Testnet" with a custom RPC endpoint. If you want to use any of the standard testnets, such as `kaolin` or `mendoza`, you can just import the predefined chain from the SDK:
-
-```typescript
 import { kaolin } from "@arkiv-network/sdk/chains";
 
 const publicClient = createPublicClient({
