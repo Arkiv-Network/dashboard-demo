@@ -1,29 +1,17 @@
+import { kaolin } from "https://esm.sh/@arkiv-network/sdk@0.6.0/chains?target=es2022&bundle-deps";
 import {
 	eq,
 	gte,
-} from "https://esm.sh/@arkiv-network/sdk@0.5.3/query?target=es2022&bundle-deps";
+} from "https://esm.sh/@arkiv-network/sdk@0.6.0/query?target=es2022&bundle-deps";
 import {
 	createPublicClient,
 	http,
-} from "https://esm.sh/@arkiv-network/sdk@0.5.3?target=es2022&bundle-deps";
+} from "https://esm.sh/@arkiv-network/sdk@0.6.0?target=es2022&bundle-deps";
 
-const ARKIV_CHAIN = {
-	id: 60138453045,
-	name: "Arkiv EthDemo Testnet",
-	nativeCurrency: {
-		decimals: 18,
-		name: "Ether",
-		symbol: "ETH",
-	},
-	rpcUrls: {
-		default: {
-			http: ["https://infurademo.hoodi.arkiv.network/rpc"],
-			webSocket: ["wss://infurademo.hoodi.arkiv.network/rpc/ws"],
-		},
-	},
-};
+const ARKIV_CHAIN = kaolin;
 
-const ARKIV_EXPLORER_BASE_URL = "https://explorer.infurademo.hoodi.arkiv.network";
+const ARKIV_EXPLORER_BASE_URL =
+	"https://explorer.kaolin.hoodi.arkiv.network";
 const ENTITY_OWNER = "0xF46E23f6a6F6336D4C64D5D1c95599bF77a536f0";
 const PROTOCOL_VERSION = "0.13";
 
@@ -144,7 +132,7 @@ async function fetchStats(timeframe) {
 	}
 
 	// const timestampWeekAgo = Math.floor(Date.now() / 1000 - 7 * 24 * 60 * 60);
-	const timestamp = 
+	const timestamp =
 		timeframe === "daily"
 			? Math.floor(Date.now() / 1000 - 30 * 24 * 60 * 60) // 30 days ago
 			: Math.floor(Date.now() / 1000 - 7 * 24 * 60 * 60); // 7 days ago
@@ -227,4 +215,9 @@ async function fetchStats(timeframe) {
 	return points;
 }
 
-export { ARKIV_EXPLORER_BASE_URL, fetchLatestBlocks, fetchBlockDetails, fetchStats };
+export {
+	ARKIV_EXPLORER_BASE_URL,
+	fetchLatestBlocks,
+	fetchBlockDetails,
+	fetchStats,
+};
