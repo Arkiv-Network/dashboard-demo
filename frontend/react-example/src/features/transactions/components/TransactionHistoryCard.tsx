@@ -17,7 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-
+import { ARKIV_EXPLORER_BASE_URL } from "@/features/arkiv-client/constants";
 import { cn } from "@/lib/utils";
 
 import { useTransactionHistory } from "../hooks/useTransactionHistory";
@@ -69,11 +69,11 @@ export function TransactionHistoryCard({
         return;
       }
 
-      const explorerUrl = `https://explorer.infurademo.hoodi.arkiv.network/entity/${entityKey}?tab=data`;
+      const explorerUrl = `${ARKIV_EXPLORER_BASE_URL}/entity/${entityKey}?tab=data`;
 
       window.open(explorerUrl, "_blank", "noopener,noreferrer");
     },
-    []
+    [],
   );
 
   return (
@@ -136,7 +136,7 @@ export function TransactionHistoryCard({
                       }
 
                       return tooltipDateFormatter.format(
-                        new Date(`${rawDate}T00:00:00Z`)
+                        new Date(`${rawDate}T00:00:00Z`),
                       );
                     }}
                     formatter={(value, name) => (

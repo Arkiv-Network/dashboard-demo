@@ -9,6 +9,7 @@ import {
   type HeatmapValueFormatters,
 } from "@/components/HeatmapChart";
 
+import { ARKIV_EXPLORER_BASE_URL } from "@/features/arkiv-client/constants";
 import { useTransactionHeatmap } from "../hooks/useTransactionHeatmap";
 
 type TransactionHeatmapCardProps = {
@@ -85,7 +86,7 @@ const TRANSACTION_HEATMAP_FORMATTERS: HeatmapValueFormatters = {
   tooltip: ({ value, dayLabel, hour }) => {
     const hourLabel = `${hour.toString().padStart(2, "0")}:00`;
     return `${dayLabel} at ${hourLabel}: ${Math.round(
-      value
+      value,
     ).toLocaleString()} tx`;
   },
 };
@@ -156,7 +157,7 @@ export function TransactionHeatmapCard({
       alwaysShowRange
       getCellHref={(datum) =>
         datum.meta?.arkivEntityKey
-          ? `https://explorer.infurademo.hoodi.arkiv.network/entity/${datum.meta.arkivEntityKey}?tab=data`
+          ? `${ARKIV_EXPLORER_BASE_URL}/entity/${datum.meta.arkivEntityKey}?tab=data`
           : undefined
       }
       cellLinkTarget="_blank"

@@ -14,6 +14,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { ARKIV_EXPLORER_BASE_URL } from "@/features/arkiv-client/constants";
 
 const dayFormatter = new Intl.DateTimeFormat(undefined, {
   month: "short",
@@ -87,11 +88,11 @@ export function GlmTransferDesktopChart({
         return;
       }
 
-      const explorerUrl = `https://explorer.infurademo.hoodi.arkiv.network/entity/${entityKey}?tab=data`;
+      const explorerUrl = `${ARKIV_EXPLORER_BASE_URL}/entity/${entityKey}?tab=data`;
 
       window.open(explorerUrl, "_blank", "noopener,noreferrer");
     },
-    []
+    [],
   );
 
   return (
@@ -145,7 +146,7 @@ export function GlmTransferDesktopChart({
                   const rawDate = payloadItems?.[0]?.payload?.date;
                   if (!rawDate) return undefined;
                   return tooltipDateFormatter.format(
-                    new Date(`${rawDate}T00:00:00Z`)
+                    new Date(`${rawDate}T00:00:00Z`),
                   );
                 }
                 const timestamp = payloadItems?.[0]?.payload?.timestamp;

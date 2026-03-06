@@ -14,6 +14,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { ARKIV_EXPLORER_BASE_URL } from "@/features/arkiv-client/constants";
 import { cn } from "@/lib/utils";
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
@@ -67,7 +68,7 @@ function generateLast28Days(): string[] {
   const days: string[] = [];
   const now = new Date();
   const today = new Date(
-    Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
+    Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()),
   );
 
   for (let i = 27; i >= 0; i--) {
@@ -84,7 +85,7 @@ function generateLast7Days(): string[] {
   const days: string[] = [];
   const now = new Date();
   const today = new Date(
-    Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
+    Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()),
   );
 
   for (let i = 7; i >= 0; i--) {
@@ -98,7 +99,7 @@ function generateLast7Days(): string[] {
 
 function groupIntoWeeks(
   allDates: string[],
-  dataMap: Map<string, DailyDataPoint>
+  dataMap: Map<string, DailyDataPoint>,
 ) {
   const weeks: Array<{
     weekLabel: string;
@@ -118,7 +119,7 @@ function groupIntoWeeks(
     const startDate = new Date(`${firstDate}T00:00:00`);
     const endDate = new Date(`${lastDate}T00:00:00`);
     const weekLabel = `${weekFormatter.format(
-      startDate
+      startDate,
     )} - ${weekFormatter.format(endDate)}`;
 
     const days = weekDates.map((date) => {
@@ -185,11 +186,11 @@ function ChartWithSelector({
   // Initialize with the latest option directly
   const defaultSelection =
     selectionOptions.length > 0
-      ? selectionOptions[selectionOptions.length - 1]?.key ?? null
+      ? (selectionOptions[selectionOptions.length - 1]?.key ?? null)
       : null;
 
   const [selectedDate, setSelectedDate] = useState<string | null>(
-    defaultSelection
+    defaultSelection,
   );
 
   const handleChartClick = useCallback(
@@ -208,11 +209,11 @@ function ChartWithSelector({
         return;
       }
 
-      const explorerUrl = `https://explorer.infurademo.hoodi.arkiv.network/entity/${entityKey}?tab=data`;
+      const explorerUrl = `${ARKIV_EXPLORER_BASE_URL}/entity/${entityKey}?tab=data`;
 
       window.open(explorerUrl, "_blank", "noopener,noreferrer");
     },
-    []
+    [],
   );
 
   const selectedMobileData = useMemo(() => {
@@ -244,7 +245,7 @@ function ChartWithSelector({
                 "rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60",
                 selectedDate === option.key
                   ? "border-orange-500 bg-orange-600 text-white shadow"
-                  : "border-orange-200 bg-white/70 text-orange-700 hover:bg-orange-50"
+                  : "border-orange-200 bg-white/70 text-orange-700 hover:bg-orange-50",
               )}
             >
               {option.label}
@@ -315,7 +316,7 @@ function ChartWithSelector({
                       const rawDate = payloadItems?.[0]?.payload?.date;
                       if (!rawDate) return undefined;
                       return dateFormatter.format(
-                        new Date(`${rawDate}T00:00:00`)
+                        new Date(`${rawDate}T00:00:00`),
                       );
                     }
                     const timestamp = payloadItems?.[0]?.payload?.timestamp;

@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { ARKIV_EXPLORER_BASE_URL } from "@/features/arkiv-client/constants";
 import { cn } from "@/lib/utils";
 import { useBlockDetails } from "../hooks/useBlockDetails";
 import { useLatestBlocks } from "../hooks/useLatestBlocks";
@@ -95,7 +96,7 @@ export function BlockSearchCard({ className }: BlockSearchCardProps) {
         value: `${blockDetails.arkivEntityKey.slice(0, 8)}…${blockDetails.arkivEntityKey.slice(
           -6,
         )}`,
-        linkTo: `https://explorer.infurademo.hoodi.arkiv.network/entity/${blockDetails.arkivEntityKey}?tab=data`,
+        linkTo: `${ARKIV_EXPLORER_BASE_URL}/entity/${blockDetails.arkivEntityKey}?tab=data`,
       },
     ];
   }

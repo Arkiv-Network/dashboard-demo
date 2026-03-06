@@ -1,4 +1,4 @@
-import { fetchBlockDetails, fetchLatestBlocks } from "./shared/arkivClient.js";
+import { ARKIV_EXPLORER_BASE_URL, fetchBlockDetails, fetchLatestBlocks } from "./shared/arkivClient.js";
 import {
 	formatAddress,
 	formatDateTime,
@@ -106,7 +106,7 @@ function updateTableRows(blocks) {
 
 		const entityCell = document.createElement("td");
 		const entityLink = createExternalLink(
-			`https://explorer.infurademo.hoodi.arkiv.network/entity/${block.arkivEntityKey}?tab=data`,
+			`${ARKIV_EXPLORER_BASE_URL}/entity/${block.arkivEntityKey}?tab=data`,
 			formatAddress(block.arkivEntityKey),
 		);
 		entityLink.title = block.arkivEntityKey;

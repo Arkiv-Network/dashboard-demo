@@ -9,6 +9,7 @@ import {
   type HeatmapValueFormatters,
 } from "@/components/HeatmapChart";
 
+import { ARKIV_EXPLORER_BASE_URL } from "@/features/arkiv-client/constants";
 import { useGasPriceChartData } from "../hooks/useGasPriceChartData";
 
 type GasPriceHeatmapCardProps = {
@@ -154,7 +155,7 @@ export function GasPriceHeatmapCard({ className }: GasPriceHeatmapCardProps) {
       alwaysShowRange
       getCellHref={(datum) =>
         datum.meta?.arkivEntityKey
-          ? `https://explorer.infurademo.hoodi.arkiv.network/entity/${datum.meta.arkivEntityKey}?tab=data`
+          ? `${ARKIV_EXPLORER_BASE_URL}/entity/${datum.meta.arkivEntityKey}?tab=data`
           : undefined
       }
       cellLinkTarget="_blank"

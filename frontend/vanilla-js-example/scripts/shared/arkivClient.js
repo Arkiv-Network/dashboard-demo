@@ -23,6 +23,7 @@ const ARKIV_CHAIN = {
 	},
 };
 
+const ARKIV_EXPLORER_BASE_URL = "https://explorer.infurademo.hoodi.arkiv.network";
 const ENTITY_OWNER = "0xF46E23f6a6F6336D4C64D5D1c95599bF77a536f0";
 const PROTOCOL_VERSION = "0.13";
 
@@ -226,4 +227,4 @@ async function fetchStats(timeframe) {
 	return points;
 }
 
-export { fetchLatestBlocks, fetchBlockDetails, fetchStats };
+export { ARKIV_EXPLORER_BASE_URL, fetchLatestBlocks, fetchBlockDetails, fetchStats };

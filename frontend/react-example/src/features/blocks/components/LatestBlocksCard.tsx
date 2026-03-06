@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import { ARKIV_EXPLORER_BASE_URL } from "@/features/arkiv-client/constants";
 import { cn } from "@/lib/utils";
 import { formatTimestamp } from "../helpers/formatTimestamp";
 import { useLatestBlocks } from "../hooks/useLatestBlocks";
@@ -163,14 +163,14 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
                       >
                         <span className="hidden sm:inline">{`${block.miner.slice(
                           0,
-                          8
+                          8,
                         )}…${block.miner.slice(-6)}`}</span>
                         <ExternalLink className="size-4" />
                       </a>
                     </TableCell>
                     <TableCell>
                       <a
-                        href={`https://explorer.infurademo.hoodi.arkiv.network/entity/${block.arkivEntityKey}?tab=data`}
+                        href={`${ARKIV_EXPLORER_BASE_URL}/entity/${block.arkivEntityKey}?tab=data`}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center justify-center text-blue-700 hover:text-blue-900 gap-1"
@@ -178,7 +178,7 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
                       >
                         <span className="hidden sm:inline">{`${block.arkivEntityKey.slice(
                           0,
-                          8
+                          8,
                         )}…${block.arkivEntityKey.slice(-6)}`}</span>
                         <ExternalLink className="size-4" />
                       </a>
@@ -258,7 +258,7 @@ export function LatestBlocksCard({ className }: LatestBlocksCardProps) {
                         Arkiv Entity
                       </span>
                       <a
-                        href={`https://explorer.infurademo.hoodi.arkiv.network/entity/${block.arkivEntityKey}?tab=data`}
+                        href={`${ARKIV_EXPLORER_BASE_URL}/entity/${block.arkivEntityKey}?tab=data`}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-1 text-blue-700 hover:text-blue-900"
