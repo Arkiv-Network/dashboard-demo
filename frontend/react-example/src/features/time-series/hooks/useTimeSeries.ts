@@ -8,9 +8,9 @@ import { type HourlyStats, TimeSeriesStatsSchema } from "../types";
  * records, so this generic hook can be reused by both features.
  */
 export function useTimeSeries(timeframe: "daily" | "hourly") {
-	const { client, entityOwner, protocolVersion } = useArkivClient();
+	const { client, entityCreator, protocolVersion } = useArkivClient();
 	return useQuery({
-		queryKey: ["time-series-data", entityOwner, protocolVersion, timeframe],
+		queryKey: ["time-series-data", entityCreator, protocolVersion, timeframe],
 		queryFn: async () => {
 			const timestamp =
 				timeframe === "hourly"
@@ -26,7 +26,7 @@ export function useTimeSeries(timeframe: "daily" | "hourly") {
 					gte("EthDemo_statsTimestamp", timestamp),
 				])
 				.limit(timeframe === "daily" ? 30 : 7 * 24)
-				.ownedBy(entityOwner)
+				.createdBy(entityCreator)
 				.withPayload()
 				.withAttributes()
 				.fetch();

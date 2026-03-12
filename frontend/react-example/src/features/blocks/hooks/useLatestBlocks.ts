@@ -4,10 +4,10 @@ import { useArkivClient } from "@/features/arkiv-client/hooks/useArkivClient";
 import { type BlockDetail, BlockDetailSchema } from "../types";
 
 export function useLatestBlocks() {
-	const { client, entityOwner, protocolVersion } = useArkivClient();
+	const { client, entityCreator, protocolVersion } = useArkivClient();
 
 	return useQuery<BlockDetail[]>({
-		queryKey: ["latest-blocks", entityOwner, protocolVersion],
+		queryKey: ["latest-blocks", entityCreator, protocolVersion],
 		refetchInterval: 15_000, // refetch every 15 seconds
 		queryFn: async () => {
 			const latestBlocks = await client
@@ -18,7 +18,7 @@ export function useLatestBlocks() {
 					eq("EthDemo_dataType", "blockdata"),
 				])
 				.limit(10)
-				.ownedBy(entityOwner)
+				.createdBy(entityCreator)
 				.withPayload()
 				.fetch();
 

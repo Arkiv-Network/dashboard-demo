@@ -14,7 +14,7 @@ export function useArkivClient() {
   }
   return {
     client,
-    entityOwner: context.entityOwner,
+    entityCreator: context.entityCreator,
     protocolVersion: context.protocolVersion,
   };
 }

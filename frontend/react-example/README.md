@@ -32,7 +32,7 @@ export function ArkivClientProvider({ children }: { children: React.ReactNode })
     <arkivClientContext.Provider
       value={{
         client,
-        entityOwner: ENTITY_OWNER,
+        entityCreator: ENTITY_CREATOR,
         protocolVersion: PROTOCOL_VERSION,
       }}
     >
@@ -44,7 +44,7 @@ export function ArkivClientProvider({ children }: { children: React.ReactNode })
 
 As your data evolves, it's a good practice to version your data schema. In this example, we pass a `protocolVersion` string to the provider, which is then used in queries to fetch the correct version of the data.
 
-In this example we only want to fetch data for a specific entity owner, so we also specify an `entityOwner` value in the context.
+In this example we only want to fetch data for a specific entity creator, so we also specify an `entityCreator` value in the context.
 
 ### 3. Querying Data with the SDK
 
@@ -56,10 +56,10 @@ import { eq } from "@arkiv-network/sdk/query";
 import { useQuery } from "@tanstack/react-query";
 
 export function useLatestBlocks() {
-  const { client, entityOwner, protocolVersion } = useArkivClient();
+  const { client, entityCreator, protocolVersion } = useArkivClient();
 
   return useQuery({
-    queryKey: ["latest-blocks", entityOwner, protocolVersion],
+    queryKey: ["latest-blocks", entityCreator, protocolVersion],
     refetchInterval: 15_000, // refetch every 15 seconds
     queryFn: async () => {
       const latestBlocks = await client
@@ -70,7 +70,7 @@ export function useLatestBlocks() {
           eq("EthDemo_dataType", "blockdata"),
         ])
         .limit(10)
-        .ownedBy(entityOwner)
+        .createdBy(entityCreator)
         .withPayload()
         .fetch();
 

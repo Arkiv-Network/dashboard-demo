@@ -3,10 +3,10 @@ import { createContext } from "react";
 
 export const arkivClientContext = createContext<{
   client: PublicArkivClient | null;
-  entityOwner: `0x${string}`;
+  entityCreator: `0x${string}`;
   protocolVersion: string;
 }>({
   client: null,
-  entityOwner: "0x",
+  entityCreator: "0x",
   protocolVersion: "",
 });

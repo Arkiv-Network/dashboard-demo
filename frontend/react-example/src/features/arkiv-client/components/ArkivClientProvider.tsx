@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getArkivClient } from "../helpers/getArkivClient";
 import { arkivClientContext } from "../context/arkivClientContext";
-import { ENTITY_OWNER, PROTOCOL_VERSION } from "../constants";
+import { ENTITY_CREATOR, PROTOCOL_VERSION } from "../constants";
 
 export function ArkivClientProvider({
   children,
@@ -14,7 +14,7 @@ export function ArkivClientProvider({
     <arkivClientContext.Provider
       value={{
         client,
-        entityOwner: ENTITY_OWNER,
+        entityCreator: ENTITY_CREATOR,
         protocolVersion: PROTOCOL_VERSION,
       }}
     >

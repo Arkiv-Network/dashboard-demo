@@ -9,9 +9,9 @@ import { type BlockDetail, BlockDetailSchema } from "../types";
 export function useBlockDetails(
 	blockNumber: string | null,
 ): UseQueryResult<BlockDetail | null> {
-	const { client, entityOwner, protocolVersion } = useArkivClient();
+	const { client, entityCreator, protocolVersion } = useArkivClient();
 	return useQuery({
-		queryKey: ["block-details", entityOwner, protocolVersion, blockNumber],
+		queryKey: ["block-details", entityCreator, protocolVersion, blockNumber],
 		enabled: blockNumber !== null,
 		queryFn: async () => {
 			if (blockNumber === null) {
@@ -27,7 +27,7 @@ export function useBlockDetails(
 					eq("EthDemo_version", protocolVersion),
 				])
 				.withPayload()
-				.ownedBy(entityOwner)
+				.createdBy(entityCreator)
 				.fetch();
 			const entity = blockDetail.entities[0];
 			if (!entity) {
