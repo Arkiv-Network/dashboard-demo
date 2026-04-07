@@ -65,6 +65,7 @@ async function hoverLastCurvePoint(chart: Locator) {
   }
   // Hover over the rightmost point of the curve to trigger the tooltip for the latest data point
   await curve.hover({
+    force: true,
     position: {
       x: curveBox.width - 1,
       y: curveBox.height / 2,
@@ -84,7 +85,9 @@ async function readVisibleTooltipText(
   // and hover over it's end
   const lastBar = chart.locator(".recharts-rectangle").last();
   if ((await lastBar.count()) > 0) {
-    await lastBar.hover();
+    await lastBar.hover({
+      force: true,
+    });
   } else {
     await hoverLastCurvePoint(chart);
   }
