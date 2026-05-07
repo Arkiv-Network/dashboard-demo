@@ -24,7 +24,7 @@ import {
 	http,
 } from "@arkiv-network/sdk";
 import { privateKeyToAccount } from "@arkiv-network/sdk/accounts";
-import { kaolin, localhost } from "@arkiv-network/sdk/chains";
+import { braga, localhost } from "@arkiv-network/sdk/chains";
 import { eq, gt } from "@arkiv-network/sdk/query";
 import type { Chain } from "viem";
 import { defineChain } from "viem";
@@ -33,7 +33,7 @@ import { DATA_VERSION } from "./src/arkiv";
 type AggregatedDataType = "hourly" | "daily";
 
 const chains = {
-	kaolin: kaolin,
+	braga: braga,
 	localhost: localhost,
 	infurademo: defineChain({
 		id: 60138453045,
