@@ -10,11 +10,11 @@ First, create a public client by defining your chain configuration and initializ
 
 ```typescript
 import { createPublicClient, http } from "@arkiv-network/sdk";
-import { kaolin } from "@arkiv-network/sdk/chains";
+import { braga } from "@arkiv-network/sdk/chains";
 
 const publicClient = createPublicClient({
   transport: http(),
-  chain: kaolin,
+  chain: braga,
 });
 ```
 

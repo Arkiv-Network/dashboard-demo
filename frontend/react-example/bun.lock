@@ -5,7 +5,7 @@
     "": {
       "name": "react-example",
       "dependencies": {
-        "@arkiv-network/sdk": "^0.6.3",
+        "@arkiv-network/sdk": "^0.6.6",
         "@radix-ui/react-separator": "^1.1.8",
         "@radix-ui/react-slot": "^1.2.4",
         "@tailwindcss/vite": "^4.1.16",
@@ -42,7 +42,7 @@
   "packages": {
     "@adraffy/ens-normalize": ["@adraffy/ens-normalize@1.11.1", "", {}, "sha512-nhCBV3quEgesuf7c7KYfperqSS14T8bYuvJ8PcLJp6znkZpFc0AuW4qBtr8eKVyPPe/8RSr7sglCWPU5eaxwKQ=="],
 
-    "@arkiv-network/sdk": ["@arkiv-network/sdk@0.6.3", "", { "dependencies": { "brotli-wasm": "^3.0.1", "typedoc-plugin-markdown": "^4.9.0", "viem": "^2.38.2" }, "peerDependencies": { "typescript": "^5.0.0" } }, "sha512-yNgAWOwQkhZ3RvXUKuYmgnEsKJ/yJ3EzuHevPoaxmKlZQrmsDNAM+rEv5/ot5KHhc4Dm/CkUGplUri3RVLLn5w=="],
+    "@arkiv-network/sdk": ["@arkiv-network/sdk@0.6.6", "", { "dependencies": { "brotli-wasm": "^3.0.1", "typedoc-plugin-markdown": "^4.9.0", "viem": "^2.38.2" }, "peerDependencies": { "typescript": "^5.0.0" } }, "sha512-zbWCt5JwwSAWqwt3JAD/5yC+pIFAGV7HDPSBqSKSvgN9C130fNmgo1CdlwIWK1xdhzO3x9onxDLrltrwgXj8iA=="],
 
     "@babel/code-frame": ["@babel/code-frame@7.27.1", "", { "dependencies": { "@babel/helper-validator-identifier": "^7.27.1", "js-tokens": "^4.0.0", "picocolors": "^1.1.1" } }, "sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg=="],
 

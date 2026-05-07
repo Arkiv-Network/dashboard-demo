@@ -1,17 +1,17 @@
-import { kaolin } from "https://esm.sh/@arkiv-network/sdk@0.6.3/chains?target=es2022&bundle-deps";
+import { braga } from "https://esm.sh/@arkiv-network/sdk@0.6.6/chains?target=es2022&bundle-deps";
 import {
 	eq,
 	gte,
-} from "https://esm.sh/@arkiv-network/sdk@0.6.3/query?target=es2022&bundle-deps";
+} from "https://esm.sh/@arkiv-network/sdk@0.6.6/query?target=es2022&bundle-deps";
 import {
 	createPublicClient,
 	http,
-} from "https://esm.sh/@arkiv-network/sdk@0.6.3?target=es2022&bundle-deps";
+} from "https://esm.sh/@arkiv-network/sdk@0.6.6?target=es2022&bundle-deps";
 
-const ARKIV_CHAIN = kaolin;
+const ARKIV_CHAIN = braga;
 
 const ARKIV_EXPLORER_BASE_URL =
-	"https://explorer.kaolin.hoodi.arkiv.network";
+	"https://explorer.braga.hoodi.arkiv.network";
 const ENTITY_CREATOR = "0xF46E23f6a6F6336D4C64D5D1c95599bF77a536f0";
 const PROTOCOL_VERSION = "0.13";
 
